@@ -31,7 +31,7 @@ namespace AfterhoursGameTestLibrary {
 
         public override void ConfigureServices( WebHostBuilderContext context , IServiceCollection services ) {
 
-
+            
             IConfigurationRoot config = new ConfigurationBuilder().SetBasePath( AppDomain.CurrentDomain.BaseDirectory ).AddJsonFile( "appsettings.json" ).Build();
 
             var section = config?.GetSection( nameof( GeneralConfiguration ) );
@@ -45,14 +45,14 @@ namespace AfterhoursGameTestLibrary {
                 Environment.SetEnvironmentVariable( "GOOGLE_APPLICATION_CREDENTIALS" , generalConfiguration.GoogleApplicationCredentials );
             }
 
-            if ( string.IsNullOrWhiteSpace( generalConfiguration?.Firestore ) ) {
+            if ( !string.IsNullOrWhiteSpace( generalConfiguration?.Firestore ) ) {
                 services.AddSingleton<INoSqlDatabase>( p => new FirebaseDatabase( generalConfiguration.Firestore ) );
             } else {
                 throw new ArgumentException( "Firestore database not defined" );
             }
             services.AddSingleton<IAuthenticateManager , AuthenticateManager>();
 
-            if ( string.IsNullOrWhiteSpace( generalConfiguration?.Firestore ) ) {
+            if ( !string.IsNullOrWhiteSpace( generalConfiguration?.Firestore ) ) {
                 services.AddSingleton<IStorageManager>( p => new StorageManager( generalConfiguration.BucketName ) );
             } else {
                 throw new ArgumentException( "Bucket name not defined" );

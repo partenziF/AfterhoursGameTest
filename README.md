@@ -2,17 +2,20 @@
 This application is written in c# using Cloud Functions using HTTP-triggered function.
 ## Requirements
 1.Google Cloud console with billing enabled
-	Make sure that billing is enabled for your Cloud project. Learn how to confirm that billing is enabled for [your project.](https://cloud.google.com/billing/docs/how-to/modify-project#confirm_billing_is_enabled_on_a_project)
+	- Make sure that billing is enabled for your Cloud project. Learn how to confirm that billing is enabled for [your project.](https://cloud.google.com/billing/docs/how-to/modify-project#confirm_billing_is_enabled_on_a_project)
 
 2.have installed the Cloud SDK on your local machine, or in Cloud Shell, to run the following commands 
-	follow the instruction [here](https://cloud.google.com/sdk/docs/install)
-	nstall and initialize the [Cloud SDK.](https://cloud.google.com/sdk/docs)
+	- follow the instruction [here](https://cloud.google.com/sdk/docs/install)
+	- Install and initialize the [Cloud SDK.](https://cloud.google.com/sdk/docs)
+
 3.Firebase CLI
-	follow the instruction [here](https://firebase.google.com/docs/cli)
+	- follow the instruction [here](https://firebase.google.com/docs/cli)
 
 4.Npm
+	- Getting start
 
 5.Angular
+	- Getting start
 
 **Note**: _Need a command prompt? You can use the Google Cloud Shell. The Google Cloud Shell is a command line environment that already includes the Cloud SDK, so you don't need to install it. The Cloud SDK also comes preinstalled on Google Compute Engine Virtual Machines._ [Open Console](https://console.cloud.google.com/?cloudshell=true)
 
@@ -50,12 +53,14 @@ _Create database firestore native ( require Name: gcloud Alpha Commands)_
 _Create native database for app_
 
 `gcloud alpha firestore databases create --project afterhours-test-federica --region=europe-central2`
+
 `Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
 
 _Create a bucket to store images (before check you have billing enabled)_
 _for further information check https://cloud.google.com/billing/docs/how-to/modify-project_
 
 _List your billing accounts_
+
 `gcloud alpha billing accounts list`
 
 _From the the list of billing accounts choose ACCOUNT_ID_
@@ -89,6 +94,12 @@ _Create new app for selected project_
 `firebase apps:create WEB "Afterhours Firebase"`
 
 
+## Enable anonymous auth:
+
+In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
+
+On the Sign-in Methods page, enable the Anonymous sign-in method.
+
 ## Create backend
 
 `mkdir afterhours-test-federica`
@@ -108,10 +119,10 @@ _"Firestore": "afterhours-test-federica"_
 
 _"BucketName": "afterhoursgame"_
 
-If you don't run locally app you can leave GoogleApplicationCredentials key blank.
+_"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
 
 
-_Enable cloud build service_
+## Enable cloud build service
 
 `gcloud services enable cloudbuild.googleapis.com`
 
@@ -121,17 +132,17 @@ _Enable cloud build service_
 
 _Create the service account_
 
-`gcloud iam service-accounts create federicaserviceaccount`
+`gcloud iam service-accounts create serviceaccount`
 
 _Grant roles to the service account_
 
-`gcloud projects add-iam-policy-binding afterhours-test-federica --member="serviceAccount:federicaserviceaccount@afterhours-test-federica.iam.gserviceaccount.com" --role=roles/owner`
+`gcloud projects add-iam-policy-binding afterhours-test-federica --member="serviceAccount:serviceaccount@afterhours-test-federica.iam.gserviceaccount.com" --role=roles/owner`
 
 _Generate the key file, replace GoogleApplicationCredentials.json in AfterhoursGameTest\AfterhoursGameTest_
 
 `cd AfterhoursGameTest\AfterhoursGameTest`
 
-`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=federicaserviceaccount@afterhours-test-federica.iam.gserviceaccount.com`
+`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@afterhours-test-federica.iam.gserviceaccount.com`
 
 
 _Deploy Google Cloud Function_
@@ -215,3 +226,5 @@ _Deploy app on firebase hosting_
 Open browser and test application!
 
 
+
+firebase ext:list --project afterhours-test-federica2

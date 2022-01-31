@@ -41,7 +41,7 @@ namespace AfterhoursGameTestLibrary {
 
             mGeneralConfiguration = section?.Get<GeneralConfiguration>();
 
-            if ( string.IsNullOrWhiteSpace( generalConfiguration?.GoogleApplicationCredentials ) ) {
+            if ( !string.IsNullOrWhiteSpace( generalConfiguration?.GoogleApplicationCredentials ) ) {
                 Environment.SetEnvironmentVariable( "GOOGLE_APPLICATION_CREDENTIALS" , generalConfiguration.GoogleApplicationCredentials );
             }
 

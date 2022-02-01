@@ -42,15 +42,15 @@ _Install beta component for firestore_
 
 _Create project_
 
-`gcloud projects create game-project-ahfp6 --name="Game Project ahfp6"` 
+`gcloud projects create game-project-ahfp7 --name="Game Project ahfp7"` 
 
 _Be sure your gcloud tool use new project_
 
-`gcloud config set project game-project-ahfp6`
+`gcloud config set project game-project-ahfp7`
 	
 _Check if the project was created_
 
-`gcloud projects describe game-project-ahfp6`
+`gcloud projects describe game-project-ahfp7`
 
 ### Enable billing for project
 
@@ -60,7 +60,7 @@ _List your billing accounts_
 
 _From the the list of billing accounts choose ACCOUNT_ID_
 
-`gcloud beta billing projects link game-project-ahfp6 --billing-account=0X0X0X-0X0X0X-0X0X0X`
+`gcloud beta billing projects link game-project-ahfp7 --billing-account=0X0X0X-0X0X0X-0X0X0X`
 
 
 ### Enable cloud build service
@@ -73,6 +73,8 @@ _From the the list of billing accounts choose ACCOUNT_ID_
 
 `gcloud services enable appengine.googleapis.com`
 
+`gcloud services enable firestore.googleapis.com`
+
 ### Add firestore database
 
 _Create database firestore native ( require Name: gcloud Alpha Commands)_
@@ -81,18 +83,18 @@ _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 _Create native database for app_
 
-`gcloud alpha firestore databases create --project game-project-ahfp6 --region=europe-central2`
+`gcloud alpha firestore databases create --project game-project-ahfp7 --region=europe-central2`
 
 ### Create bucket for profile
 
 _Create a bucket to store images (before check you have billing enabled)_
 _for further information check https://cloud.google.com/billing/docs/how-to/modify-project_
 
-`gsutil mb -b on -l us-east1 gs://profilebucket-ahfp6/`
+`gsutil mb -b on -l us-east1 gs://profilebucket-ahfp7/`
 
 _Run command to make all objects in a bucket readable to everyone on the public internet_
 
-`gsutil iam ch allUsers:objectViewer gs://profilebucket-ahfp6`
+`gsutil iam ch allUsers:objectViewer gs://profilebucket-ahfp7`
 
 ## Create firebase project
 
@@ -102,13 +104,13 @@ _Authenticate to your Firebase account. Requires access to a web browser (this t
 
 _Adding Firebase resources to Google Cloud Platform project_
 
-`firebase projects:addfirebase game-project-ahfp6`
+`firebase projects:addfirebase game-project-ahfp7`
 
 ## Create backend
 
-`mkdir game-project-ahfp6`
+`mkdir game-project-ahfp7`
 
-`cd game-project-ahfp6`
+`cd game-project-ahfp7`
 
 _Clone git repository_
 
@@ -123,29 +125,29 @@ _Create the service account_
 
 _Grant roles to the service account_
 
-`gcloud projects add-iam-policy-binding game-project-ahfp6 --member="serviceAccount:serviceaccount@game-project-ahfp6.iam.gserviceaccount.com" --role=roles/owner`
+`gcloud projects add-iam-policy-binding game-project-ahfp7 --member="serviceAccount:serviceaccount@game-project-ahfp7.iam.gserviceaccount.com" --role=roles/owner`
 
 
 _Generate the key file, replace GoogleApplicationCredentials.json in AfterhoursGameTest\AfterhoursGameTest_
 
 `cd AfterhoursGameTest\AfterhoursGameTest`
 
-`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@game-project-ahfp6.iam.gserviceaccount.com`
+`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@game-project-ahfp7.iam.gserviceaccount.com`
 
 
 ### Update configuration file appsettings.json
 
 Find file named appsettings.json open it and replace in GeneralConfiguration section the value for firebase and BucketName.
 
-_"Firestore": "game-project-ahfp6"_
+_"Firestore": "game-project-ahfp7"_
 
-_"BucketName": "profilebucket-ahfp6"_
+_"BucketName": "profilebucket-ahfp7"_
 
 _"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
 
-_**Note:** Deploy function works on game-project-ahfp6\AfterhoursGameTest directory_
+_**Note:** Deploy function works on game-project-ahfp7\AfterhoursGameTest directory_
 
-`cd game-project-ahfp6\AfterhoursGameTest\`
+`cd game-project-ahfp7\AfterhoursGameTest\`
 
 _Deploy Google Cloud Function_
 
@@ -167,9 +169,9 @@ _**Note:** Usefull in case of error you can viewing logs of function with comman
 
 ## Create Angular App
 
-_In  game-project-ahfp6 directory clone repository contains angular application_
+_In  game-project-ahfp7 directory clone repository contains angular application_
 
-`cd game-project-ahfp6`
+`cd game-project-ahfp7`
 
 _Clone git repository_
 
@@ -179,7 +181,7 @@ _Clone git repository_
 
 _Use project created_
 
-`firebase use game-project-ahfp6`
+`firebase use game-project-ahfp7`
 
 _Check your project list_
 
@@ -189,7 +191,7 @@ _Now project you should see (current) near project id_
 
 _Create new app for selected project_
 
-`firebase apps:create WEB "Game Project ahfp6"`
+`firebase apps:create WEB "Game Project ahfp7"`
 
 ## Enable anonymous auth:
 
@@ -235,7 +237,7 @@ _Build application with angular_
 
 _Deploy app on firebase hosting_
 
-`firebase target:apply hosting afterhoursApp game-project-ahfp6`
+`firebase target:apply hosting afterhoursApp game-project-ahfp7`
 
 `firebase deploy`
 

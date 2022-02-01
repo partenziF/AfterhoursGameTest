@@ -63,23 +63,26 @@ namespace uploadprofile {
 
                 if ( context.IsPOST() ) {
 
-
-                    var request = await HttpRequestMap.ToClassAsync<AuthorizationRequest>( context.Request );
-
-                    if ( !Validate( request , out string errorMessage ) ) {
-                        this.mLogger.LogWarning( errorMessage );
-                        await context.BadRequest( errorMessage );
-                        return;
-                    }
+                    IFormFile file = null;
 
                     try {
-
+                        
+                        //First read file
                         var formData = await context.Request.ReadFormAsync();
-                        var file = context.Request.Form.Files["file"];
+                        file = context.Request.Form.Files["file"];
+
+                        var request = await HttpRequestMap.ToClassAsync<AuthorizationRequest>( context.Request );
+
+                        if ( !Validate( request , out string errorMessage ) ) {
+                            this.mLogger.LogWarning( errorMessage );
+                            await context.BadRequest( errorMessage );
+                            return;
+                        }
 
                         var u = new BizLogicUser( db , mLogger );
 
                         switch ( await u.IsLogged( request.AuthToken , authenticateManager ) ) {
+
                             case TokenStatus.Verified:
 
                             if ( file != null ) {

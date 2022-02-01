@@ -11,11 +11,17 @@ This application is written in c# using Cloud Functions using HTTP-triggered fun
 3.Firebase CLI
 	- follow the instruction [here](https://firebase.google.com/docs/cli)
 
-4.Npm
-	- Getting start
+4.Node.js
+	- [Install Node.js](https://nodejs.org/en/)
 
-5.Angular
-	- Getting start
+5.Npm
+	- [Getting started](https://docs.npmjs.com/getting-started)
+	- [npm CLI](https://docs.npmjs.com/cli/v8/commands/npm-install)
+
+6.Angular
+	- [Getting started](https://angular.io/start) and install using command
+	
+	`npm install -g @angular/cli`
 
 **Note**: _Need a command prompt? You can use the Google Cloud Shell. The Google Cloud Shell is a command line environment that already includes the Cloud SDK, so you don't need to install it. The Cloud SDK also comes preinstalled on Google Compute Engine Virtual Machines._ [Open Console](https://console.cloud.google.com/?cloudshell=true)
 

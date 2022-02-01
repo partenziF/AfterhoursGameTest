@@ -183,57 +183,65 @@ namespace users {
         }
 
         private async Task UploadProfile( HttpContext context , string id ) {
+            try {
+                var formData = await context.Request.ReadFormAsync();
+                var file = context.Request.Form.Files["file"];
 
-            var formData = await context.Request.ReadFormAsync();
-            var file = context.Request.Form.Files["file"];
-            if ( file != null ) {
+                if ( file != null ) {
 
-                var extension = System.IO.Path.GetExtension( file.FileName ); ;
+                    var extension = System.IO.Path.GetExtension( file.FileName ); ;
 
-                var u = new BizLogicUser( id , db , mLogger );
-                await u.Initialization;
+                    var u = new BizLogicUser( id , db , mLogger );
+                    await u.Initialization;
 
 
-                bool isValidFolder;
-                if ( !mStorage.Exists( $"{id}/" ) ) {
-                    isValidFolder = mStorage.NewFolder( $"{id}/" );
-                } else {
-                    isValidFolder = true;
-                }
-
-                if ( !isValidFolder ) {
-                    await context.InternalError( "Folder not exits" );
-                    return;
-                }
-
-                using ( System.IO.Stream fs = file.OpenReadStream() ) {
-
-                    if ( !fs.IsValidImageFile() ) {
-                        await context.BadRequest( "Invalid image format." );
-                        return;
-
+                    bool isValidFolder;
+                    if ( !mStorage.Exists( $"{id}/" ) ) {
+                        isValidFolder = mStorage.NewFolder( $"{id}/" );
+                    } else {
+                        isValidFolder = true;
                     }
 
-                    string Bucketfilename = $"{id}/profile{extension}";
-
-                    if ( !mStorage.Upload( fs , Bucketfilename ) ) {
-
-                        await context.BadRequest( "Can't upload file" );
+                    if ( !isValidFolder ) {
+                        await context.InternalError( "Folder not exits" );
                         return;
-
                     }
 
-                    var mediaUrl = mStorage.GetUrl( Bucketfilename );
+                    using ( System.IO.Stream fs = file.OpenReadStream() ) {
 
-                    if ( !String.IsNullOrWhiteSpace( mediaUrl ) ) {
-
-                        var profile = new Profile() { Filename = file.FileName , ByteSize = file.Length , Url = mediaUrl };
-                        var r = await u.CreateProfile( profile );
-
-                        if ( r != null ) {
-
-                            await context.OK( profile , true );
+                        if ( !fs.IsValidImageFile() ) {
+                            await context.BadRequest( "Invalid image format." );
                             return;
+
+                        }
+
+                        string Bucketfilename = $"{id}/profile{extension}";
+
+                        if ( !mStorage.Upload( fs , Bucketfilename ) ) {
+
+                            await context.BadRequest( "Can't upload file" );
+                            return;
+
+                        }
+
+                        var mediaUrl = mStorage.GetUrl( Bucketfilename );
+
+                        if ( !String.IsNullOrWhiteSpace( mediaUrl ) ) {
+
+                            var profile = new Profile() { Filename = file.FileName , ByteSize = file.Length , Url = mediaUrl };
+                            var r = await u.CreateProfile( profile );
+
+                            if ( r != null ) {
+
+                                await context.OK( profile , true );
+                                return;
+
+                            } else {
+                                await context.InternalError( "Can't save profile" );
+                                return;
+
+                            }
+
 
                         } else {
                             await context.InternalError( "Can't save profile" );
@@ -242,21 +250,22 @@ namespace users {
                         }
 
 
-                    } else {
-                        await context.InternalError( "Can't save profile" );
-                        return;
-
                     }
 
 
+                } else {
+                    await context.BadRequest( "Invalid file parameter" );
+                    return;
+
                 }
-
-
-            } else {
-                await context.BadRequest( "Invalid file parameter" );
+            } catch ( Exception e ) {
+                await context.InternalError( "Internal Error" );
+                mLogger.LogError( e.Message );
                 return;
 
             }
+
+
         }
 
         private async Task CreateUser( HttpContext context ) {

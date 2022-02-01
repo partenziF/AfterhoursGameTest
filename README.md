@@ -193,28 +193,27 @@ _Create new app for selected project_
 
 `firebase apps:create WEB "Game Project ahfp7"`
 
-### Enable anonymous auth
-
-In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
-
-On the Sign-in Methods page, enable the Anonymous sign-in method.
-
 ### Setup configuration file
 
 _Now to get the configuration file type, anche if request choose the app_
 
 `firebase apps:sdkconfig WEB` 
 
-_replace the code in initializeApp in afterhoursApp/src/environments/environments.ts and srcenvironments/environments.prod.ts_
+_replace the code in firebase.initializeApp in afterhoursApp/src/environments/environments.ts and srcenvironments/environments.prod.ts_
 
-_When the function finishes deploying, take note of the httpsTrigger.url property or find it using the following command:_
+`cd src\environments\`
 
-_It should look like this:https://GCP_REGION-PROJECT_ID.cloudfunctions.net/<FUNCTION-NAME>_
+_open file environment.prod.ts_
 
-`gcloud functions describe login`
+_open file environment.ts_
 
+_When the function finishes deploying, take note of the httpsTrigger.url property (It should look like this:https://GCP_REGION-PROJECT_ID.cloudfunctions.net/<FUNCTION-NAME>) or find it using the following command:_
+
+**gcloud functions describe <FUNCTION-NAME>**
 
 _replace the httpsTrigger.url property value within afterhoursApp/src/environments/environments.ts and /src/environments/environments.prod.ts in the baseURL structure_
+
+`gcloud functions describe login`
 
 `gcloud functions describe userinfo`
 
@@ -225,6 +224,10 @@ _replace the httpsTrigger.url property value within afterhoursApp/src/environmen
 `gcloud functions describe getprofile`
 
 `gcloud functions describe users`
+
+_Back to App root directory_
+
+`cd game-project-ahfp7\afterhoursApp`
 
 _Authenticate to your Firebase account. Requires access to a web browser_
 
@@ -242,6 +245,11 @@ _Deploy app on firebase hosting_
 
 `firebase deploy`
 
+## Enable anonymous auth
+
+In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
+
+On the Sign-in Methods page, enable the Anonymous sign-in method.
 
 ## Finish 
 

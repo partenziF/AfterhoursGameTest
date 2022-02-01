@@ -56,6 +56,17 @@ _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 `gcloud app create --region=europe-central2`
 
+### Enable cloud build service
+
+`gcloud services enable cloudbuild.googleapis.com`
+
+`gcloud services enable cloudfunctions.googleapis.com`
+
+`gcloud services enable iamcredentials.googleapis.com`
+
+
+### Add firestore database
+
 _Create native database for app_
 
 `gcloud alpha firestore databases create --project game-project-ahfp1 --region=europe-central2`
@@ -99,13 +110,6 @@ _Clone git repository_
 
 `git clone https://github.com/partenziF/AfterhoursGameTest`
 
-## Enable cloud build service
-
-`gcloud services enable cloudbuild.googleapis.com`
-
-`gcloud services enable cloudfunctions.googleapis.com`
-
-`gcloud services enable iamcredentials.googleapis.com`
 
 ## Create service account
 
@@ -117,9 +121,10 @@ _Grant roles to the service account_
 
 `gcloud projects add-iam-policy-binding game-project-ahfp1 --member="serviceAccount:serviceaccount@game-project-ahfp1.iam.gserviceaccount.com" --role=roles/owner`
 
-_Generate the key file, replace GoogleApplicationCredentials.json in profilebucketTest\profilebucketTest_
 
-`cd profilebucketTest\profilebucketTest`
+_Generate the key file, replace GoogleApplicationCredentials.json in AfterhoursGameTest\AfterhoursGameTest_
+
+`cd AfterhoursGameTest\AfterhoursGameTest`
 
 `gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@game-project-ahfp1.iam.gserviceaccount.com`
 
@@ -134,9 +139,9 @@ _"BucketName": "profilebucket"_
 
 _"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
 
-_**Note:** Deploy function works on game-project-ahfp1\profilebucketTest directory_
+_**Note:** Deploy function works on game-project-ahfp1\AfterhoursGameTest directory_
 
-`cd game-project-ahfp1\profilebucketTest\`
+`cd game-project-ahfp1\AfterhoursGameTest\`
 
 _Deploy Google Cloud Function_
 

@@ -42,15 +42,15 @@ _Install beta component for firestore_
 
 _Create project_
 
-`gcloud projects create afterhours-test-federica --name="Afterhours Test Federica"` 
+`gcloud projects create game-project-ahfp1 --name="Game Project"` 
 
 _Be sure your gcloud tool use new project_
 
-`gcloud config set project afterhours-test-federica`
+`gcloud config set project game-project-ahfp1`
 	
 _Check if the project was created_
 
-`gcloud projects describe afterhours-test-federica`
+`gcloud projects describe game-project-ahfp1`
 
 _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
@@ -58,7 +58,7 @@ _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 _Create native database for app_
 
-`gcloud alpha firestore databases create --project afterhours-test-federica --region=europe-central2`
+`gcloud alpha firestore databases create --project game-project-ahfp1 --region=europe-central2`
 
 `Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
 
@@ -71,13 +71,13 @@ _List your billing accounts_
 
 _From the the list of billing accounts choose ACCOUNT_ID_
 
-`gcloud beta billing projects link my-project --billing-account=0X0X0X-0X0X0X-0X0X0X`
+`gcloud beta billing projects link game-project-ahfp1 --billing-account=0X0X0X-0X0X0X-0X0X0X`
 
-`gsutil mb -b on -l us-east1 gs://afterhoursgame/`
+`gsutil mb -b on -l us-east1 gs://profilebucket/`
 
 _Run command to make all objects in a bucket readable to everyone on the public internet_
 
-`gsutil iam ch allUsers:objectViewer gs://afterhoursgame`
+`gsutil iam ch allUsers:objectViewer gs://profilebucket`
 
 ## Create firebase project
 
@@ -85,56 +85,25 @@ _Authenticate to your Firebase account. Requires access to a web browser_
 
 `firebase login --no-localhost`
 
-_Create new firebase project_
+_Adding Firebase resources to Google Cloud Platform project_
 
-`firebase projects:addfirebase afterhours-test-federica`
-
-_Use project created_
-
-`firebase use afterhours-test-federica`
-
-_Check your project list_
-
-`firebase projects:list`
-
-_Now project you should see (current) near project id_
-_Create new app for selected project_
-
-`firebase apps:create WEB "Afterhours Firebase"`
-
-
-## Enable anonymous auth:
-
-In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
-
-On the Sign-in Methods page, enable the Anonymous sign-in method.
+`firebase projects:addfirebase game-project-ahfp1`
 
 ## Create backend
 
-`mkdir afterhours-test-federica`
+`mkdir game-project-ahfp1`
 
-`cd afterhours-test-federica`
+`cd game-project-ahfp1`
 
 _Clone git repository_
 
-`git clone https://github.com/partenziF/AfterhoursGameTest.git`
-
-`cd AfterhoursGameTest/`
-
-### Update configuration file appsettings.json
-
-Replace in GeneralConfiguration section the value for firebase and BucketName.
-
-_"Firestore": "afterhours-test-federica"_
-
-_"BucketName": "afterhoursgame"_
-
-_"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
-
+`git clone https://github.com/partenziF/profilebucketTest.git`
 
 ## Enable cloud build service
 
 `gcloud services enable cloudbuild.googleapis.com`
+
+`gcloud services enable cloudfunctions.googleapis.com`
 
 `gcloud services enable iamcredentials.googleapis.com`
 
@@ -146,14 +115,28 @@ _Create the service account_
 
 _Grant roles to the service account_
 
-`gcloud projects add-iam-policy-binding afterhours-test-federica --member="serviceAccount:serviceaccount@afterhours-test-federica.iam.gserviceaccount.com" --role=roles/owner`
+`gcloud projects add-iam-policy-binding game-project-ahfp1 --member="serviceAccount:serviceaccount@game-project-ahfp1.iam.gserviceaccount.com" --role=roles/owner`
 
-_Generate the key file, replace GoogleApplicationCredentials.json in AfterhoursGameTest\AfterhoursGameTest_
+_Generate the key file, replace GoogleApplicationCredentials.json in profilebucketTest\profilebucketTest_
 
-`cd AfterhoursGameTest\AfterhoursGameTest`
+`cd profilebucketTest\profilebucketTest`
 
-`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@afterhours-test-federica.iam.gserviceaccount.com`
+`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@game-project-ahfp1.iam.gserviceaccount.com`
 
+
+### Update configuration file appsettings.json
+
+Find file named appsettings.json open it and replace in GeneralConfiguration section the value for firebase and BucketName.
+
+_"Firestore": "game-project-ahfp1"_
+
+_"BucketName": "profilebucket"_
+
+_"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
+
+_**Note:** Deploy function works on game-project-ahfp1\profilebucketTest directory_
+
+`cd game-project-ahfp1\profilebucketTest\`
 
 _Deploy Google Cloud Function_
 
@@ -173,27 +156,44 @@ _Viewing logs_
 
 `gcloud functions logs read <FUNCTION-NAME>`
 
-## Create frontend
+## Create Angular App
 
-_Go to afterhours-test-federica directory_
+_In  game-project-ahfp1 directory clone repository contains angular application_
 
-`cd afterhours-test-federica`
+`cd game-project-ahfp1`
 
 _Clone git repository_
 
 `git clone https://github.com/partenziF/afterhoursApp.git`
 
-`cd AfterhoursApp/`
+`cd afterhoursApp/`
 
 _Use project created_
 
-`firebase use afterhours-test-federica`
+`firebase use game-project-ahfp1`
+
+_Check your project list_
+
+`firebase projects:list`
+
+_Now project you should see (current) near project id_
+
+_Create new app for selected project_
+
+???`firebase apps:create WEB "Afterhours Firebase"`
+
+## Enable anonymous auth:
+
+In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
+
+
+On the Sign-in Methods page, enable the Anonymous sign-in method.
 
 _Now to get the configuration file type, anche if request choose the app_
 
 `firebase apps:sdkconfig WEB` 
 
-_replace the code in initializeApp in afterhoursApp/src/environments/environments.ts and /src/environments/environments.prod.ts_
+_replace the code in initializeApp in afterhoursApp/src/environments/environments.ts and srcenvironments/environments.prod.ts_
 
 _When the function finishes deploying, take note of the httpsTrigger.url property or find it using the following command:_
 
@@ -226,7 +226,7 @@ _Build application with angular_
 
 _Deploy app on firebase hosting_
 
-`firebase target:apply hosting afterhoursApp afterhours-test-federica`
+`firebase target:apply hosting afterhoursApp game-project-ahfp1`
 
 `firebase deploy`
 
@@ -234,7 +234,3 @@ _Deploy app on firebase hosting_
 ## Finish 
 
 Open browser and test application!
-
-
-
-firebase ext:list --project afterhours-test-federica2

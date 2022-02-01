@@ -97,7 +97,7 @@ _Adding Firebase resources to Google Cloud Platform project_
 
 _Clone git repository_
 
-`git clone https://github.com/partenziF/profilebucketTest.git`
+`git clone https://github.com/partenziF/AfterhoursGameTest`
 
 ## Enable cloud build service
 

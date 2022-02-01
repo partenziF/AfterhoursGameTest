@@ -52,18 +52,6 @@ _Check if the project was created_
 
 `gcloud projects describe game-project-ahfp4`
 
-### Add firestore database
-
-_Create database firestore native ( require Name: gcloud Alpha Commands)_
-
-`gcloud app create --region=europe-central2`
-
-_Create native database for app_
-
-`gcloud alpha firestore databases create --project game-project-ahfp4 --region=europe-central2`
-
-`Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
-
 ### Enable billing for project
 
 _List your billing accounts_
@@ -84,6 +72,17 @@ _From the the list of billing accounts choose ACCOUNT_ID_
 `gcloud services enable cloudbuild.googleapis.com`
 
 
+### Add firestore database
+
+_Create database firestore native ( require Name: gcloud Alpha Commands)_
+
+`gcloud app create --region=europe-central2`
+
+_Create native database for app_
+
+`gcloud alpha firestore databases create --project game-project-ahfp4 --region=europe-central2`
+
+`Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
 
 
 ### Create bucket for profile

@@ -83,9 +83,6 @@ _Create native database for app_
 
 `gcloud alpha firestore databases create --project game-project-ahfp6 --region=europe-central2`
 
-`Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
-
-
 ### Create bucket for profile
 
 _Create a bucket to store images (before check you have billing enabled)_
@@ -142,7 +139,7 @@ Find file named appsettings.json open it and replace in GeneralConfiguration sec
 
 _"Firestore": "game-project-ahfp6"_
 
-_"BucketName": "profilebucket"_
+_"BucketName": "profilebucket-ahfp6"_
 
 _"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
 
@@ -164,7 +161,7 @@ _Deploy Google Cloud Function_
 
 `gcloud functions deploy users --runtime dotnet3 --trigger-http --allow-unauthenticated --entry-point=users.Users --set-build-env-vars=GOOGLE_BUILDABLE=users`
 
-_Viewing logs_
+_**Note:** Usefull in case of error you can viewing logs of function with command_
 
 `gcloud functions logs read <FUNCTION-NAME>`
 

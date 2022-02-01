@@ -185,7 +185,7 @@ _Now project you should see (current) near project id_
 
 _Create new app for selected project_
 
-???`firebase apps:create WEB "Afterhours Firebase"`
+`firebase apps:create WEB "Game Project"`
 
 ## Enable anonymous auth:
 

@@ -73,14 +73,17 @@ _From the the list of billing accounts choose ACCOUNT_ID_
 
 `gcloud beta billing projects link my-project --billing-account=0X0X0X-0X0X0X-0X0X0X`
 
-
 `gsutil mb -b on -l us-east1 gs://afterhoursgame/`
+
+_Run command to make all objects in a bucket readable to everyone on the public internet_
+
+`gsutil iam ch allUsers:objectViewer gs://afterhoursgame`
+
+## Create firebase project
 
 _Authenticate to your Firebase account. Requires access to a web browser_
 
 `firebase login --no-localhost`
-
-## Create firebase project
 
 _Create new firebase project_
 
@@ -109,6 +112,7 @@ On the Sign-in Methods page, enable the Anonymous sign-in method.
 ## Create backend
 
 `mkdir afterhours-test-federica`
+
 `cd afterhours-test-federica`
 
 _Clone git repository_

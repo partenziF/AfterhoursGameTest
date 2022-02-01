@@ -52,13 +52,11 @@ _Check if the project was created_
 
 `gcloud projects describe game-project-ahfp4`
 
+### Add firestore database
+
 _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 `gcloud app create --region=europe-central2`
-
-
-
-### Add firestore database
 
 _Create native database for app_
 

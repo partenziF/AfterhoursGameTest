@@ -56,6 +56,16 @@ _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 `gcloud app create --region=europe-central2`
 
+
+
+### Add firestore database
+
+_Create native database for app_
+
+`gcloud alpha firestore databases create --project game-project-ahfp2 --region=europe-central2`
+
+`Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
+
 ### Enable billing for project
 
 _List your billing accounts_
@@ -69,21 +79,16 @@ _From the the list of billing accounts choose ACCOUNT_ID_
 
 ### Enable cloud build service
 
-`gcloud services enable cloudbuild.googleapis.com`
-
 `gcloud services enable cloudfunctions.googleapis.com`
 
 `gcloud services enable iamcredentials.googleapis.com`
 
-`gcloud firestore databases create --region=europe-central2`
+`gcloud services enable cloudbuild.googleapis.com`
 
-### Add firestore database
 
-_Create native database for app_
 
-`gcloud alpha firestore databases create --project game-project-ahfp2 --region=europe-central2`
 
-`Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
+### Create bucket for profile
 
 _Create a bucket to store images (before check you have billing enabled)_
 _for further information check https://cloud.google.com/billing/docs/how-to/modify-project_

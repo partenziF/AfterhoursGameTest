@@ -193,12 +193,13 @@ _Create new app for selected project_
 
 `firebase apps:create WEB "Game Project ahfp7"`
 
-## Enable anonymous auth:
+### Enable anonymous auth
 
 In the [Firebase console](https://console.firebase.google.com/), open the Auth section.
 
-
 On the Sign-in Methods page, enable the Anonymous sign-in method.
+
+### Setup configuration file
 
 _Now to get the configuration file type, anche if request choose the app_
 

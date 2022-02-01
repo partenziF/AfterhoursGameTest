@@ -42,19 +42,22 @@ _Install beta component for firestore_
 
 _Create project_
 
-`gcloud projects create game-project-ahfp1 --name="Game Project"` 
+`gcloud projects create game-project-ahfp2 --name="Game Project"` 
 
 _Be sure your gcloud tool use new project_
 
-`gcloud config set project game-project-ahfp1`
+`gcloud config set project game-project-ahfp2`
 	
 _Check if the project was created_
 
-`gcloud projects describe game-project-ahfp1`
+`gcloud projects describe game-project-ahfp2`
 
 _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 `gcloud app create --region=europe-central2`
+
+
+`gcloud firestore databases create --region=europe-central2`
 
 ### Enable cloud build service
 
@@ -69,7 +72,7 @@ _Create database firestore native ( require Name: gcloud Alpha Commands)_
 
 _Create native database for app_
 
-`gcloud alpha firestore databases create --project game-project-ahfp1 --region=europe-central2`
+`gcloud alpha firestore databases create --project game-project-ahfp2 --region=europe-central2`
 
 `Would you like to enable and retry (this will take a few minutes)? (y/N)? y`
 
@@ -82,7 +85,7 @@ _List your billing accounts_
 
 _From the the list of billing accounts choose ACCOUNT_ID_
 
-`gcloud beta billing projects link game-project-ahfp1 --billing-account=0X0X0X-0X0X0X-0X0X0X`
+`gcloud beta billing projects link game-project-ahfp2 --billing-account=0X0X0X-0X0X0X-0X0X0X`
 
 `gsutil mb -b on -l us-east1 gs://profilebucket/`
 
@@ -98,13 +101,13 @@ _Authenticate to your Firebase account. Requires access to a web browser_
 
 _Adding Firebase resources to Google Cloud Platform project_
 
-`firebase projects:addfirebase game-project-ahfp1`
+`firebase projects:addfirebase game-project-ahfp2`
 
 ## Create backend
 
-`mkdir game-project-ahfp1`
+`mkdir game-project-ahfp2`
 
-`cd game-project-ahfp1`
+`cd game-project-ahfp2`
 
 _Clone git repository_
 
@@ -119,29 +122,29 @@ _Create the service account_
 
 _Grant roles to the service account_
 
-`gcloud projects add-iam-policy-binding game-project-ahfp1 --member="serviceAccount:serviceaccount@game-project-ahfp1.iam.gserviceaccount.com" --role=roles/owner`
+`gcloud projects add-iam-policy-binding game-project-ahfp2 --member="serviceAccount:serviceaccount@game-project-ahfp2.iam.gserviceaccount.com" --role=roles/owner`
 
 
 _Generate the key file, replace GoogleApplicationCredentials.json in AfterhoursGameTest\AfterhoursGameTest_
 
 `cd AfterhoursGameTest\AfterhoursGameTest`
 
-`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@game-project-ahfp1.iam.gserviceaccount.com`
+`gcloud iam service-accounts keys create GoogleApplicationCredentials.json --iam-account=serviceaccount@game-project-ahfp2.iam.gserviceaccount.com`
 
 
 ### Update configuration file appsettings.json
 
 Find file named appsettings.json open it and replace in GeneralConfiguration section the value for firebase and BucketName.
 
-_"Firestore": "game-project-ahfp1"_
+_"Firestore": "game-project-ahfp2"_
 
 _"BucketName": "profilebucket"_
 
 _"GoogleApplicationCredentials": "GoogleApplicationCredentials.json"_
 
-_**Note:** Deploy function works on game-project-ahfp1\AfterhoursGameTest directory_
+_**Note:** Deploy function works on game-project-ahfp2\AfterhoursGameTest directory_
 
-`cd game-project-ahfp1\AfterhoursGameTest\`
+`cd game-project-ahfp2\AfterhoursGameTest\`
 
 _Deploy Google Cloud Function_
 
@@ -163,9 +166,9 @@ _Viewing logs_
 
 ## Create Angular App
 
-_In  game-project-ahfp1 directory clone repository contains angular application_
+_In  game-project-ahfp2 directory clone repository contains angular application_
 
-`cd game-project-ahfp1`
+`cd game-project-ahfp2`
 
 _Clone git repository_
 
@@ -175,7 +178,7 @@ _Clone git repository_
 
 _Use project created_
 
-`firebase use game-project-ahfp1`
+`firebase use game-project-ahfp2`
 
 _Check your project list_
 
@@ -231,7 +234,7 @@ _Build application with angular_
 
 _Deploy app on firebase hosting_
 
-`firebase target:apply hosting afterhoursApp game-project-ahfp1`
+`firebase target:apply hosting afterhoursApp game-project-ahfp2`
 
 `firebase deploy`
 
